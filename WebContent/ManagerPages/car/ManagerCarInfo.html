@@ -1,0 +1,84 @@
+<!--表格设置 -->
+<table id="carInfo">
+</table>
+<!-- toolber -->
+<div id="carListTb">
+	<form id="carSearchForm" method="get">
+		车牌号码：<input class="easyui-textbox" type="text" id="license" name="license" style="width:130px"/>&nbsp;
+		汽车类型：<input class="easyui-textbox" type="text" id="c_type" name="c_type"  style="width:130px"/>&nbsp;
+		车辆状态：<input class="easyui-textbox" type="text" id="status_kind" name="status_kind"  style="width:130px"/>&nbsp;
+	<a href="javascript:;" class="easyui-linkbutton" onclick="carInfoSearch()" data-options="iconCls:'icon-search'" style="width:80px">查询</a>
+	<a href="javascript:;" class="easyui-linkbutton" onclick="carInfoRedo()" data-options="iconCls:'icon-redo'" style="width:80px">重置</a>
+      </form>
+	 <a id="carEdit" href="javascript:void(0);"
+		class="easyui-linkbutton" data-options="iconCls:'icon-edit',text:'修改车辆信息'"></a>
+	<a id="carDel" href="javascript:void(0);"
+		class="easyui-linkbutton" data-options="iconCls:'icon-remove',text:'删除车辆信息'"></a>
+	
+</div>
+<!-- 新增/修改 window -->
+<div id="mycarWindow" class="easyui-window" style="width: 400px"
+	data-options="collapsible:false,minimizable:false,maximizable:false,draggable:false,resizable:false,closed:true,modal:true,closable:false">
+	<div style="padding: 10px 60px 20px 10px">
+		 <form id="carForm" method="post">
+		 	<table cellpadding="5">
+		 		<tr>
+		 	    <td align="right">汽车编号：</td>
+		 			<td><input class="easyui-textbox" type="text" id="id" name="id" data-options="editable:false"/></td>
+		 	    </tr>
+		 		<tr>
+		 	    <td align="right">车牌号码：</td>
+		 			<td><input class="easyui-textbox" type="text" id="license" name="license" data-options="prompt:'车牌号码',iconWidth:38,required:true,validType:['license']"/></td>
+		 	    </tr>
+		 		<tr>
+		 			<td align="right">车辆颜色：</td>
+		 			<td><input class="easyui-textbox" type="text" id="color" name="color" data-options="required:true"/></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">车辆品牌：</td>
+		 			<td><input class="easyui-textbox" type="text" id="brand" name="brand" data-options="required:true"/></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">车辆类型：</td>
+		 			<td><input class="easyui-textbox" type="text" id="c_type" name="c_type" data-options="required:true" /></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">车辆排量：</td>
+		 			<td><input class="easyui-textbox" type="text" id="displacement" name="displacement" data-options="required:true" /></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">车辆等级：</td>
+		 			<td><input class="easyui-textbox" type="text" id="level_kind" name="level_kind" data-options="required:true" /></td>
+		 		</tr>
+		 		<tr>
+		 			<td>等级分为：</td>
+		 			<td>经济型、家用型、商务型、豪华型</td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">车辆状态：</td>
+		 			<td><input class="easyui-textbox" type="text" id="status_kind" name="status_kind" data-options="required:true" /></td>
+		 		</tr>		 		
+		 		<tr>
+		 			<td>状态分为：</td>
+		 			<td>未租赁、故障、已租赁、预定中</td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">出租价格：</td>
+		 			<td><input class="easyui-textbox" type="text" id="price" name="price" data-options="required:true" /></td>
+		 		</tr> 		
+		 		<tr>
+		 			<td align="right">汽车描述：</td>
+		 			<td><input class="easyui-textbox" type="text" id="c_describe" name="c_describe" data-options="multiline:true" style="width:200px;height:150px" value="最多500字" /></td>
+		 		</tr>
+		 	</table>
+		 </form>
+	</div>
+	<div style="text-align: center; padding: 5px;">
+		<a id="carFormSave" href="javascript:void(0);"	class="easyui-linkbutton" data-options="iconCls:'icon-ok',text:'保存'"></a>
+		<a id="carFormUndo" href="javascript:void(0);"	class="easyui-linkbutton" data-options="iconCls:'icon-undo',text:'取消'"></a>
+	</div>
+	</div>
+	<script type="text/javascript"
+	src="ManagerPages/js/car/ManagerCarInfo.js"></script>
+	<script type="text/javascript"
+	src="ManagerPages/base/validate.js""></script>

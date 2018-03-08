@@ -1,0 +1,94 @@
+<!--表格设置 -->
+<table id="userAllOrderInfo">
+</table>
+<!-- toolber -->
+<div id="userAllOrderListTb">
+	<form id="userAllOrderSearchForm" method="get">
+		订单编号：<input class="easyui-textbox" type="text" id="id" name="id" style="width:130px"/>&nbsp;
+		汽车类型：<input class="easyui-textbox" type="text" id="c_type" name="c_type"  style="width:130px"/>&nbsp;
+	<a href="javascript:;" class="easyui-linkbutton" onclick="userAllOrderInfoSerch()" data-options="iconCls:'icon-search'" style="width:80px">查询</a>
+	<a href="javascript:;" class="easyui-linkbutton" onclick="userAllOrderInfoRedo()" data-options="iconCls:'icon-redo'" style="width:80px">重置</a>
+      </form>
+	<!-- <a id="orderEdit" href="javascript:void(0);"
+		class="easyui-linkbutton" data-options="iconCls:'icon-edit',text:'修改订单'"></a> -->
+	<a id="userAllOrderDel" href="javascript:void(0);"
+		class="easyui-linkbutton" data-options="iconCls:'icon-remove',text:'删除订单'"></a>
+</div>
+<!-- 新增/修改 window -->
+<div id="userAllOrderWindow" class="easyui-window" style="width: 400px"
+	data-options="collapsible:false,minimizable:false,maximizable:false,draggable:false,resizable:false,closed:true,modal:true,closable:false">
+	<div style="padding: 10px 60px 20px 10px">
+		 <form id="userAllOrderForm" method="post">
+		 	<table cellpadding="5">
+		 		<tr>
+		 			<td align="right">订单编号：</td>
+		 			<td><input class="easyui-textbox" type="text" id="id" name="id" data-options="editable:false"/></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">姓名：</td>
+		 			<td><input class="easyui-textbox" type="text" id="receiveName" name="receiveName" data-options="editable:false" /></td>
+		 		</tr>
+		 		<!-- <tr>
+		 			<td align="right">手机号码：</td>
+		 			<td><input class="easyui-textbox" type="text" id="receivePhone" name="receivePhone" data-options="editable:false" /></td>
+		 		</tr> -->
+		 		<tr>
+		 			<td align="right">车牌号码：</td>
+		 			<td><input class="easyui-textbox" type="text" id="license" name="license" data-options="editable:false" /></td>
+		 		</tr>
+		 		<!-- <tr>
+		 			<td align="right">车辆品牌：</td>
+		 			<td><input class="easyui-textbox" type="text" id="brand" name="brand" data-options="editable:false" /></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">车辆类型：</td>
+		 			<td><input class="easyui-textbox" type="text" id="c_type" name="c_type" data-options="editable:false" /></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">身份证号：</td>
+		 			<td><input class="easyui-textbox" type="text" id="receiveIdentity" name="receiveIdentity" data-options="editable:false" /></td>
+		 		<!-- </tr> -->
+		 		<tr>
+		 			<td align="right">取车地址：</td>
+		 			<td><input class="easyui-textbox" type="text" id="receiveAddress" name="receiveAddress" data-options="editable:false" /></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">还车地址：</td>
+		 			<td><input class="easyui-textbox" type="text" id="backAddress" name="backAddress" data-options="editable:false" /></td>
+		 		</tr> -->
+		 	  <tr>
+		 			<td align="right">开始时间：</td>
+		 			<td><input id="startAt" type="text" class="easyui-datebox" name="startAt" required="required"/> </td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">结束时间：</td>
+		 			<td><input id="endAt" type="text" class="easyui-datebox" name="endAt" required="required"/></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">还车时间：</td>
+		 			<td><input id="backAt" type="text" class="easyui-datebox" name="backAt" required="required"/></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">订单状态：</td>
+		 			<td><input id="order_status_kind" type="text" class="easyui-datebox" name="order_status_kind" required="required"/></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">审核状态：</td>
+		 			<td><input id="order_check_kind" type="text" class="easyui-datebox" name="order_check_kind" required="required"/></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">支付状态：</td>
+		 			<td><input id="pay_status_kind" type="text" class="easyui-datebox" name="pay_status_kind" required="required"/></td>
+		 		</tr>    
+		 	</table>
+		 </form>
+	</div>
+	<div style="text-align: center; padding: 5px;">
+		<a id="userAllOrderFormSave" href="javascript:void(0);"	class="easyui-linkbutton" data-options="iconCls:'icon-ok',text:'保存'"></a>
+		<a id="userAllOrderFormUndo" href="javascript:void(0);"	class="easyui-linkbutton" data-options="iconCls:'icon-undo',text:'取消'"></a>
+	</div>
+	</div>
+<script type="text/javascript"
+	src="plug-in/dateFormat.js"></script>
+<script type="text/javascript"
+	src="pages/js/order/userAllOrder.js"></script>

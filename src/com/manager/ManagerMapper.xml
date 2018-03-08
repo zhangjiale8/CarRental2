@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manager.ManagerMapper">
+	<!--登录  -->
+	<select id="loginVerification" resultType="com.manager.Manager">
+		<![CDATA[
+			SELECT * FROM manager WHERE m_status='ACTIVATED'and m_username=#{0} and m_password=#{1}
+        ]]>  
+	</select>
+	<!-- 记录用户数目 -->
+	<select id="countAllUser" resultType="int">
+		SELECT COUNT(u.id) FROM c_user u 
+		  <where>
+			<if test="map.username!=null and map.username!='' ">
+			 	and u.username = #{map.username}
+			</if>
+			<if test="map.status!=null and map.status!='' ">
+				and u.status = #{map.status}
+			</if>
+			<if test="map.sex!=null and map.sex!=''">
+				and u.sex = #{map.sex}
+			</if>
+			<if test="map.fullname!=null and map.fullname!=''">
+				and u.fullname = #{map.fullname}
+			</if>
+			<if test="map.identity!=null and map.identity!=''">
+				and u.identity = #{map.identity}
+			</if>
+			<if test="map.phone!=null and map.phone!=''">
+				and u.phone = #{map.phone}
+			</if>
+			<if test="map.email!=null and map.email!=''">
+				and u.email = #{map.email}
+			</if>
+			<if test="map.address!=null and map.address!=''">
+				and u.address = #{map.address}
+			</if> 
+			
+		</where>  
+	</select>
+	
+	
+	<!-- 查询所有用户信息记录 -->
+	<select id="searchAllUserList" resultType="com.user.User">
+		SELECT * FROM c_user u
+		  <where>
+			<if test="map.username!=null and map.username!='' ">
+			 	and u.username = #{map.username}
+			</if>
+			<if test="map.status!=null and map.status!='' ">
+				and u.status = #{map.status}
+			</if>
+			<if test="map.sex!=null and map.sex!=''">
+				and u.sex = #{map.sex}
+			</if>
+			<if test="map.fullname!=null and map.fullname!=''">
+				and u.fullname = #{map.fullname}
+			</if>
+			<if test="map.identity!=null and map.identity!=''">
+				and u.identity = #{map.identity}
+			</if>
+			<if test="map.phone!=null and map.phone!=''">
+				and u.phone = #{map.phone}
+			</if>
+			<if test="map.email!=null and map.email!=''">
+				and u.email = #{map.email}
+			</if>
+			<if test="map.address!=null and map.address!=''">
+				and u.address = #{map.address}
+			</if>
+			
+		</where> 
+		order by u.id ASC limit #{startRow},#{pageSize}
+	</select>
+	
+	<!-- 当前用户的信息列表  个人信息查询-->
+	<select id="searchManagerInfo" resultType="com.manager.Manager">
+        select * from manager m where m.id=#{managerId}
+		 limit #{startRow},#{pageSize}
+</select>
+
+<!--用户资料更新  -->
+	<update id="updateManager" parameterType="com.manager.Manager">
+		update manager set  m_status=#{m_status}, m_sex=#{m_sex}, m_fullname=#{m_fullname}, m_identity=#{m_identity}, m_email=#{m_email}, m_address=#{m_address}, m_phone=#{m_phone} where m_username=#{m_username}
+	</update>
+	<!-- 根据用户名查询 -->
+	<select id="searchManagerByName" resultType="com.manager.Manager">
+		<![CDATA[
+			SELECT * FROM manager WHERE m_username=#{m_username}
+        ]]>  
+	</select>
+</mapper>

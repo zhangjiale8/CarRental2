@@ -1,0 +1,715 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.order.OrderMapper">
+	<!-- 删除订单 -->
+	<delete id="orderDelete" parameterType="int">
+	DELETE FROM user_order WHERE id=#{id}
+	</delete>
+	<!--  新增订单 2016-04-24 -->
+	<insert id="addOrder" parameterType="map" >
+		insert into user_order (u_id,r_id,c_id,startAt,endAt,orderStatus,orderCheck,payStatus,tackAt,backStatus) 
+		VALUES (#{map.userId},#{map.receiverId},#{map.CarId},#{map.startAt},#{map.endAt},'7','2','1',now(),'1')
+	</insert>
+	<!-- 查询当前订单的Id 2016-04-24-->
+	<select id="getOrderId" resultType="int">
+       select @@identity
+	</select>
+	
+	 <!-- 当前用户的 订单列表记录数 -->
+	<select id="countOrder" resultType="int">
+	   SELECT COUNT(o.id) FROM user_order o where o.u_id=#{userId}
+	   <!-- <where>
+			<if test="param.id!=null and param.id!='' ">
+			and	 o.id LIKE CONCAT('%', #{param.id},'%')
+			</if>
+			<if test="param.c_type!=null and param.c_type!='' ">
+			and	 o.c_type LIKE CONCAT('%', #{param.c_type},'%') 
+			</if>
+			and  o.u_id=#{userId}
+		</where>  -->
+	</select>
+	<!-- 当前用户的订单列表 -->
+	<select id="searchOrderList" resultType="com.order.Order">
+        select * from user_order o where o.u_id=#{userId}
+        
+  <!--  <where>
+			<if test="param.id!=null and param.id!='' ">
+			and	o.id LIKE CONCAT('%', #{param.id},'%')
+			</if>
+			<if test="param.c_type!=null and param.c_type!='' ">
+			and	 o.c_type LIKE CONCAT('%', #{param.c_type},'%') 
+			</if>
+			and  o.u_id=#{userId}
+		</where>  -->
+		 limit #{startRow},#{pageSize}
+</select>
+	 <!-- 所有用户的 订单列表记录数 -->
+	<select id="countAllOrder" resultType="int">
+	   SELECT COUNT(o.id) FROM user_order o 
+	    <where>
+			<if test="param.u_username!=null and param.u_username!='' ">
+			and	 o.u_username = #{param.u_username}
+			</if>
+			<if test="param.c_type!=null and param.c_type!='' ">
+			and	 o.c_type = #{param.c_type}
+			</if>
+		</where> 
+	</select>
+	<!-- 所有用户的订单列表 -->
+	<select id="searchAllOrderList" resultType="com.order.Order">
+        select * from user_order o 
+         <where>
+			<if test="param.u_username!=null and param.u_username!='' ">
+			and	 o.u_username = #{param.u_username}
+			</if>
+			<if test="param.c_type!=null and param.c_type!='' ">
+			and	 o.c_type = #{param.c_type}
+			</if>
+		</where>
+  
+		 limit #{startRow},#{pageSize}
+</select>
+
+<!-- 更新订单的支付状态，默认是未支付 -->
+
+<update id="updateOrderPayStatus" parameterType="map">
+	update user_order set  payStatus='2'where id=#{map.orderId}
+</update>
+
+ <!--
+ 	20160429.14.56
+ 	计算当前用户的所有订单数目
+  -->
+	<select id="countUserAllOrder" resultType="int">
+	   SELECT COUNT(o.id) 
+	   FROM user_order o ,ordercheck oc ,orderstatus s,paystatus p,c_car c,receiverinfo r ,c_user u 
+	    <where>
+	    	o.`u_id`= #{map.userId} 
+	    	and o.`orderStatus`!=6
+         and o.`c_id`= c.`id` 
+         AND o.`u_id`= u.`id` 
+         AND o.`payStatus` = p.`id` 
+         AND o.`r_id`=r.`id` 
+		AND o.`orderCheck`=oc.`id` 
+		AND o.`orderStatus` =s.`id`
+			<if test="map.id!=null and map.id!='' ">
+			and	 o.id = #{map.id}
+			</if>
+			<if test="map.order_status_kind!=null and map.order_status_kind!='' ">
+			and	 s.order_status_kind = #{map.order_status_kind}
+			</if> 
+			<if test="map.order_check_kind!=null and map.order_check_kind!='' ">
+			and	 oc.order_check_kind = #{map.order_check_kind}
+			</if> 
+			<if test="map.pay_status_kind!=null and map.pay_status_kind!='' ">
+			and	 p.pay_status_kind = #{map.pay_status_kind}
+			</if> 
+		</where> 
+	</select>	
+	<!-- 所有用户的订单列表 -->
+	<select id="searchUserAllOrder" resultType="java.util.HashMap" >
+       SELECT 
+		o.`id`,o.`startAt`,o.`endAt`,o.`backAt`,o.`total`,
+		r.`receiveName`,
+		c.`license`,
+		p.`pay_status_kind`,
+		oc.`order_check_kind`,
+		s.`order_status_kind`
+		FROM user_order o ,ordercheck oc ,orderstatus s,paystatus p,c_car c,receiverinfo r ,c_user u
+
+         <where>
+         o.`u_id`= #{map.userId} 
+         and o.`orderStatus`!=6
+         and o.`c_id`= c.`id` 
+         AND o.`u_id`= u.`id` 
+         AND o.`payStatus` = p.`id` 
+         AND o.`r_id`=r.`id` 
+		AND o.`orderCheck`=oc.`id` 
+		AND o.`orderStatus` =s.`id`
+		
+			<if test="map.id!=null and map.id!='' ">
+			and	 o.id = #{map.id}
+			</if>
+			<if test="map.order_status_kind!=null and map.order_status_kind!='' ">
+			and	 s.order_status_kind = #{map.order_status_kind}
+			</if> 
+			<if test="map.order_check_kind!=null and map.order_check_kind!='' ">
+			and	 oc.order_check_kind = #{map.order_check_kind}
+			</if> 
+			<if test="map.pay_status_kind!=null and map.pay_status_kind!='' ">
+			and	 p.pay_status_kind = #{map.pay_status_kind}
+			</if> 
+		</where>
+  
+		 limit #{startRow},#{pageSize}
+</select> 
+
+
+
+    
+    <!-- 更新订单的支付状态，默认是未支付 -->
+
+<update id="updateUserDel" parameterType="map">
+	update user_order set  orderStatus='6'where id=#{map.id} and u_id=#{map.userId}
+</update>
+
+
+
+<!--
+ 	20160504.14.56
+ 	计算当前用户的待审核订单数目
+  -->
+	<select id="countUserCheckingOrder" resultType="int">
+	   SELECT COUNT(o.id) 
+	   FROM user_order o ,ordercheck oc ,orderstatus s,paystatus p,c_car c,receiverinfo r ,c_user u 
+	    <where>
+	    	o.`u_id`= #{map.userId} 
+	    	and o.`orderStatus`=7
+	    	and o.`payStatus`=2
+	    	and o.`orderCheck`=2
+         and o.`c_id`= c.`id` 
+         AND o.`u_id`= u.`id` 
+         AND o.`payStatus` = p.`id` 
+         AND o.`r_id`=r.`id` 
+		AND o.`orderCheck`=oc.`id` 
+		AND o.`orderStatus` =s.`id`
+			<if test="map.id!=null and map.id!='' ">
+			and	 o.id = #{map.id}
+			</if>
+			<if test="map.order_status_kind!=null and map.order_status_kind!='' ">
+			and	 s.order_status_kind = #{map.order_status_kind}
+			</if> 
+			<if test="map.order_check_kind!=null and map.order_check_kind!='' ">
+			and	 oc.order_check_kind = #{map.order_check_kind}
+			</if> 
+			<if test="map.pay_status_kind!=null and map.pay_status_kind!='' ">
+			and	 p.pay_status_kind = #{map.pay_status_kind}
+			</if> 
+		</where> 
+	</select>	
+	<!-- 当前用户的待审核订单列表 -->
+	<select id="searchUserCheckingOrder" resultType="java.util.HashMap" >
+       SELECT 
+		o.`id`,o.`startAt`,o.`endAt`,o.`backAt`,o.`total`,
+		r.`receiveName`,r.`receiveIdentity`,r.`backAddress`,r.`receiveAddress`,r.`receivePhone`,
+		c.`license`,c.`brand`,c.`c_type`,
+		p.`pay_status_kind`,
+		oc.`order_check_kind`,
+		s.`order_status_kind`
+		FROM user_order o ,ordercheck oc ,orderstatus s,paystatus p,c_car c,receiverinfo r ,c_user u
+
+         <where>
+         o.`u_id`= #{map.userId} 
+	    	and o.`orderStatus`=7
+	    	and o.`payStatus`=2
+	    	and o.`orderCheck`=2
+         and o.`c_id`= c.`id` 
+         AND o.`u_id`= u.`id` 
+         AND o.`payStatus` = p.`id` 
+         AND o.`r_id`=r.`id` 
+		AND o.`orderCheck`=oc.`id` 
+		AND o.`orderStatus` =s.`id`
+		
+			<if test="map.id!=null and map.id!='' ">
+			and	 o.id = #{map.id}
+			</if>
+			<if test="map.order_status_kind!=null and map.order_status_kind!='' ">
+			and	 s.order_status_kind = #{map.order_status_kind}
+			</if> 
+			<if test="map.order_check_kind!=null and map.order_check_kind!='' ">
+			and	 oc.order_check_kind = #{map.order_check_kind}
+			</if> 
+			<if test="map.pay_status_kind!=null and map.pay_status_kind!='' ">
+			and	 p.pay_status_kind = #{map.pay_status_kind}
+			</if> 
+		</where>
+  
+		 limit #{startRow},#{pageSize}
+</select> 
+
+ <!-- 
+20160504 
+ 用户取消订单 -->
+
+<update id="userCheckingOrderCal" parameterType="map">
+	update user_order set  orderStatus='5'where id=#{map.id} and u_id=#{map.userId}
+</update>
+<!-- 插入订单总额 -->
+<update id="insertOrderTotal" parameterType="map">
+	update user_order set total=#{map.total} where id=#{map.orderId} and u_id=#{map.userId}
+</update>
+
+<!--
+ 	20160504.23.11
+ 	计算当前用户未支付订单数目
+  -->
+	<select id="countUserPayingOrder" resultType="int">
+	   SELECT COUNT(o.id) 
+	   FROM user_order o ,ordercheck oc ,orderstatus s,paystatus p,c_car c,receiverinfo r ,c_user u 
+	    <where>
+	    	o.`u_id`= #{map.userId} 
+	    	and o.`orderStatus`=7
+	    	and o.`payStatus`=1
+	    	and o.`orderCheck`=2
+         and o.`c_id`= c.`id` 
+         AND o.`u_id`= u.`id` 
+         AND o.`payStatus` = p.`id` 
+         AND o.`r_id`=r.`id` 
+		AND o.`orderCheck`=oc.`id` 
+		AND o.`orderStatus` =s.`id`
+			<if test="map.id!=null and map.id!='' ">
+			and	 o.id = #{map.id}
+			</if>
+			<if test="map.order_status_kind!=null and map.order_status_kind!='' ">
+			and	 s.order_status_kind = #{map.order_status_kind}
+			</if> 
+			<if test="map.order_check_kind!=null and map.order_check_kind!='' ">
+			and	 oc.order_check_kind = #{map.order_check_kind}
+			</if> 
+			<if test="map.pay_status_kind!=null and map.pay_status_kind!='' ">
+			and	 p.pay_status_kind = #{map.pay_status_kind}
+			</if> 
+		</where> 
+	</select>	
+	<!-- 当前用户的待审核订单列表 -->
+	<select id="searchUserPayingOrder" resultType="java.util.HashMap" >
+       SELECT 
+		o.`id`,o.`startAt`,o.`endAt`,o.`backAt`,o.`total`,
+		r.`receiveName`,r.`receiveIdentity`,r.`backAddress`,r.`receiveAddress`,r.`receivePhone`,
+		c.`license`,c.`brand`,c.`c_type`,
+		p.`pay_status_kind`,
+		oc.`order_check_kind`,
+		s.`order_status_kind`
+		FROM user_order o ,ordercheck oc ,orderstatus s,paystatus p,c_car c,receiverinfo r ,c_user u
+
+         <where>
+         o.`u_id`= #{map.userId} 
+	    	and o.`orderStatus`=7
+	    	and o.`payStatus`=1
+	    	and o.`orderCheck`=2
+         and o.`c_id`= c.`id` 
+         AND o.`u_id`= u.`id` 
+         AND o.`payStatus` = p.`id` 
+         AND o.`r_id`=r.`id` 
+		AND o.`orderCheck`=oc.`id` 
+		AND o.`orderStatus` =s.`id`
+		
+			<if test="map.id!=null and map.id!='' ">
+			and	 o.id = #{map.id}
+			</if>
+			<if test="map.order_status_kind!=null and map.order_status_kind!='' ">
+			and	 s.order_status_kind = #{map.order_status_kind}
+			</if> 
+			<if test="map.order_check_kind!=null and map.order_check_kind!='' ">
+			and	 oc.order_check_kind = #{map.order_check_kind}
+			</if> 
+			<if test="map.pay_status_kind!=null and map.pay_status_kind!='' ">
+			and	 p.pay_status_kind = #{map.pay_status_kind}
+			</if> 
+		</where>
+  
+		 limit #{startRow},#{pageSize}
+</select> 
+
+<!-- 根据id查询订单详细信息 -->
+	<select id="selectOrderById"  resultType="com.order.Order">
+		SELECT * FROM user_order o WHERE o.`id`=#{map.id} 
+	</select>
+	
+	
+	<!--
+ 	20160505.15.31
+ 	计算当前用户的待完成订单数目
+  -->
+	<select id="countUserGoingOrder" resultType="int">
+	    SELECT COUNT(o.id) 
+	   FROM user_order o ,ordercheck oc ,orderstatus s,paystatus p,c_car c,receiverinfo r ,c_user u ,backstatus bs
+	    <where>
+	    	 (o.`orderStatus`=2 OR o.`orderStatus`=4 )
+	    	AND o.`u_id`=#{map.userId}
+	    	AND o.`payStatus`=2
+	    	AND o.`orderCheck`=1
+	    	AND o.`backStatus`=1
+         AND o.`c_id`= c.`id` 
+         AND o.`u_id`= u.`id` 
+         AND o.`payStatus` = p.`id` 
+         AND o.`r_id`=r.`id` 
+		AND o.`orderCheck`=oc.`id` 
+		AND o.`orderStatus` =s.`id`
+		AND o.`backStatus`=bs.`id`
+			<if test="map.id!=null and map.id!='' ">
+			and	 o.id = #{map.id}
+			</if>
+			<if test="map.order_status_kind!=null and map.order_status_kind!='' ">
+			and	 s.order_status_kind = #{map.order_status_kind}
+			</if> 
+			<if test="map.order_check_kind!=null and map.order_check_kind!='' ">
+			and	 oc.order_check_kind = #{map.order_check_kind}
+			</if> 
+			<if test="map.pay_status_kind!=null and map.pay_status_kind!='' ">
+			and	 p.pay_status_kind = #{map.pay_status_kind}
+			</if> 
+		</where> 
+	</select>	
+	<!-- 当前用户的待完成订单列表 -->
+	<select id="searchUserGoingOrder" resultType="java.util.HashMap" >
+        SELECT 
+		o.`id`,o.`startAt`,o.`endAt`,o.`backAt`,o.`total`,
+		r.`receiveName`,r.`receiveIdentity`,r.`backAddress`,r.`receiveAddress`,r.`receivePhone`,
+		c.`license`,c.`brand`,c.`c_type`,
+		p.`pay_status_kind`,
+		oc.`order_check_kind`,
+		s.`order_status_kind`,
+		bs.`back_status_kind`
+		FROM user_order o ,ordercheck oc ,orderstatus s,paystatus p,c_car c,receiverinfo r ,c_user u,backstatus bs
+
+         <where>
+        	 (o.`orderStatus`=2 OR o.`orderStatus`=4)
+	    	AND o.`u_id`=#{map.userId} 
+	    	AND o.`payStatus`=2
+	    	AND o.`orderCheck`=1
+	    	AND o.`backStatus`=1
+         AND o.`c_id`= c.`id` 
+         AND o.`u_id`= u.`id` 
+         AND o.`payStatus` = p.`id` 
+         AND o.`r_id`=r.`id` 
+		AND o.`orderCheck`=oc.`id` 
+		AND o.`orderStatus` =s.`id`
+		AND o.`backStatus`=bs.`id`
+		
+			<if test="map.id!=null and map.id!='' ">
+			and	 o.id = #{map.id}
+			</if>
+			<if test="map.order_status_kind!=null and map.order_status_kind!='' ">
+			and	 s.order_status_kind = #{map.order_status_kind}
+			</if> 
+			<if test="map.order_check_kind!=null and map.order_check_kind!='' ">
+			and	 oc.order_check_kind = #{map.order_check_kind}
+			</if> 
+			<if test="map.pay_status_kind!=null and map.pay_status_kind!='' ">
+			and	 p.pay_status_kind = #{map.pay_status_kind}
+			</if> 
+		</where>
+  
+		 limit #{startRow},#{pageSize}
+</select> 
+	<update id="endOrder" parameterType="map">
+	update user_order set  orderStatus='1',backStatus='2',backAt=NOW() where id=#{map.id} 
+</update>
+
+
+
+
+<!--
+ 	20160505.19.56
+ 	计算当前用户的待审核订单数目
+  -->
+	<select id="countManagerAllUserOrder" resultType="int">
+	   SELECT COUNT(o.id) 
+	   FROM user_order o ,ordercheck oc ,orderstatus s,paystatus p,c_car c,receiverinfo r ,c_user u 
+	    <where>
+	    	 o.`c_id`= c.`id` 
+         AND o.`u_id`= u.`id` 
+         AND o.`payStatus` = p.`id` 
+         AND o.`r_id`=r.`id` 
+		AND o.`orderCheck`=oc.`id` 
+		AND o.`orderStatus` =s.`id`
+			<if test="map.id!=null and map.id!='' ">
+			and	 o.id = #{map.id}
+			</if>
+			<if test="map.order_status_kind!=null and map.order_status_kind!='' ">
+			and	 s.order_status_kind = #{map.order_status_kind}
+			</if> 
+			<if test="map.order_check_kind!=null and map.order_check_kind!='' ">
+			and	 oc.order_check_kind = #{map.order_check_kind}
+			</if> 
+			<if test="map.pay_status_kind!=null and map.pay_status_kind!='' ">
+			and	 p.pay_status_kind = #{map.pay_status_kind}
+			</if> 
+		</where> 
+	</select>	
+	<!-- 所有用户订单列表 -->
+	<select id="searchManagerAllUserOrder" resultType="java.util.HashMap" >
+       SELECT 
+		o.`id`,o.`startAt`,o.`endAt`,o.`backAt`,o.`total`,
+		r.`receiveName`,r.`receiveIdentity`,r.`backAddress`,r.`receiveAddress`,r.`receivePhone`,
+		c.`license`,c.`brand`,c.`c_type`,
+		p.`pay_status_kind`,
+		oc.`order_check_kind`,
+		s.`order_status_kind`
+		FROM user_order o ,ordercheck oc ,orderstatus s,paystatus p,c_car c,receiverinfo r ,c_user u
+
+         <where>
+          o.`c_id`= c.`id` 
+         AND o.`u_id`= u.`id` 
+         AND o.`payStatus` = p.`id` 
+         AND o.`r_id`=r.`id` 
+		AND o.`orderCheck`=oc.`id` 
+		AND o.`orderStatus` =s.`id`
+		
+			<if test="map.id!=null and map.id!='' ">
+			and	 o.id = #{map.id}
+			</if>
+			<if test="map.order_status_kind!=null and map.order_status_kind!='' ">
+			and	 s.order_status_kind = #{map.order_status_kind}
+			</if> 
+			<if test="map.order_check_kind!=null and map.order_check_kind!='' ">
+			and	 oc.order_check_kind = #{map.order_check_kind}
+			</if> 
+			<if test="map.pay_status_kind!=null and map.pay_status_kind!='' ">
+			and	 p.pay_status_kind = #{map.pay_status_kind}
+			</if> 
+		</where>
+  
+		 limit #{startRow},#{pageSize}
+</select> 
+
+
+<!--
+ 	20160505.22.00
+ 	计算所有用户的待审核订单数目，订单已支付
+  -->
+	<select id="countManagerAllUserCheckingOrder" resultType="int">
+	   SELECT COUNT(o.id) 
+	   FROM user_order o ,ordercheck oc ,orderstatus s,paystatus p,c_car c,receiverinfo r ,c_user u 
+	    <where>
+	    	 o.`orderStatus`=7
+	    	and o.`payStatus`=2
+	    	and o.`orderCheck`=2
+         and o.`c_id`= c.`id` 
+         AND o.`u_id`= u.`id` 
+         AND o.`payStatus` = p.`id` 
+         AND o.`r_id`=r.`id` 
+		AND o.`orderCheck`=oc.`id` 
+		AND o.`orderStatus` =s.`id`
+			<if test="map.id!=null and map.id!='' ">
+			and	 o.id = #{map.id}
+			</if>
+			<if test="map.order_status_kind!=null and map.order_status_kind!='' ">
+			and	 s.order_status_kind = #{map.order_status_kind}
+			</if> 
+			<if test="map.order_check_kind!=null and map.order_check_kind!='' ">
+			and	 oc.order_check_kind = #{map.order_check_kind}
+			</if> 
+			<if test="map.pay_status_kind!=null and map.pay_status_kind!='' ">
+			and	 p.pay_status_kind = #{map.pay_status_kind}
+			</if> 
+		</where> 
+	</select>	
+	<!-- 20160505.22.00
+	所有用户的待审核订单列表， 订单已支付 -->
+	<select id="searchManagerAllUserCheckingOrder" resultType="java.util.HashMap" >
+       SELECT 
+		o.`id`,o.`startAt`,o.`endAt`,o.`backAt`,o.`total`,
+		r.`receiveName`,r.`receiveIdentity`,r.`backAddress`,r.`receiveAddress`,r.`receivePhone`,
+		c.`license`,c.`brand`,c.`c_type`,
+		p.`pay_status_kind`,
+		oc.`order_check_kind`,
+		s.`order_status_kind`
+		FROM user_order o ,ordercheck oc ,orderstatus s,paystatus p,c_car c,receiverinfo r ,c_user u
+
+         <where>
+         	 o.`orderStatus`=7
+	    	and o.`payStatus`=2
+	    	and o.`orderCheck`=2
+         and o.`c_id`= c.`id` 
+         AND o.`u_id`= u.`id` 
+         AND o.`payStatus` = p.`id` 
+         AND o.`r_id`=r.`id` 
+		AND o.`orderCheck`=oc.`id` 
+		AND o.`orderStatus` =s.`id`
+		
+			<if test="map.id!=null and map.id!='' ">
+			and	 o.id = #{map.id}
+			</if>
+			<if test="map.order_status_kind!=null and map.order_status_kind!='' ">
+			and	 s.order_status_kind = #{map.order_status_kind}
+			</if> 
+			<if test="map.order_check_kind!=null and map.order_check_kind!='' ">
+			and	 oc.order_check_kind = #{map.order_check_kind}
+			</if> 
+			<if test="map.pay_status_kind!=null and map.pay_status_kind!='' ">
+			and	 p.pay_status_kind = #{map.pay_status_kind}
+			</if> 
+		</where>
+  
+		 limit #{startRow},#{pageSize}
+</select> 
+
+<update id="ManagerAllUserCheckingOrderOn" parameterType="map">
+	update user_order set  orderCheck='1',orderStatus='2'where id=#{map.id} 
+</update>
+
+<!-- 
+用户还车
+2016-05-09 -->
+<update id="userEndOrder" parameterType="map">
+	update user_order set  backStatus='3' where id=#{map.id} and u_id=#{map.userId}
+</update>
+
+<!-- 
+用户续租
+2016-05-09 -->
+<update id="delayOrder" parameterType="map">
+	update user_order set  orderStatus='4',endAt=#{map.endAt} where id=#{map.id} and u_id=#{map.userId}
+</update>
+
+
+<!--
+ 	20160509 22.07
+ 	计算用户提交还车申请订单数
+  -->
+	<select id="countManagerAllUserBackOrder" resultType="int">
+	   SELECT COUNT(o.id) 
+	   FROM user_order o ,ordercheck oc ,orderstatus s,paystatus p,c_car c,receiverinfo r ,c_user u ,backstatus bs
+	    <where>
+	    	 o.`backStatus`=3
+         AND o.`c_id`= c.`id` 
+         AND o.`u_id`= u.`id` 
+         AND o.`payStatus` = p.`id` 
+         AND o.`r_id`=r.`id` 
+		AND o.`orderCheck`=oc.`id` 
+		AND o.`orderStatus` =s.`id`
+		AND o.`backStatus`=bs.`id`
+			<if test="map.id!=null and map.id!='' ">
+			and	 o.id = #{map.id}
+			</if>
+			<if test="map.order_status_kind!=null and map.order_status_kind!='' ">
+			and	 s.order_status_kind = #{map.order_status_kind}
+			</if> 
+			<if test="map.order_check_kind!=null and map.order_check_kind!='' ">
+			and	 oc.order_check_kind = #{map.order_check_kind}
+			</if> 
+			<if test="map.pay_status_kind!=null and map.pay_status_kind!='' ">
+			and	 p.pay_status_kind = #{map.pay_status_kind}
+			</if> 
+		</where> 
+	</select>	
+	<!-- 20160509.22.00
+	用户提交还车申请订单列表 -->
+	<select id="searchManagerAllUserBackOrder" resultType="java.util.HashMap" >
+       SELECT 
+		o.`id`,o.`startAt`,o.`endAt`,o.`backAt`,o.`total`,
+		r.`receiveName`,r.`receiveIdentity`,r.`backAddress`,r.`receiveAddress`,r.`receivePhone`,
+		c.`license`,c.`brand`,c.`c_type`,
+		p.`pay_status_kind`,
+		oc.`order_check_kind`,
+		s.`order_status_kind`,
+		bs.`back_status_kind`
+		FROM user_order o ,ordercheck oc ,orderstatus s,paystatus p,c_car c,receiverinfo r ,c_user u,backstatus bs
+         <where>
+         o.`backStatus`=3	    	
+         AND o.`c_id`= c.`id` 
+         AND o.`u_id`= u.`id` 
+         AND o.`payStatus` = p.`id` 
+         AND o.`r_id`=r.`id` 
+		AND o.`orderCheck`=oc.`id` 
+		AND o.`orderStatus` =s.`id`
+	AND o.`backStatus`=bs.`id`
+		
+			<if test="map.id!=null and map.id!='' ">
+			and	 o.id = #{map.id}
+			</if>
+			<if test="map.order_status_kind!=null and map.order_status_kind!='' ">
+			and	 s.order_status_kind = #{map.order_status_kind}
+			</if> 
+			<if test="map.order_check_kind!=null and map.order_check_kind!='' ">
+			and	 oc.order_check_kind = #{map.order_check_kind}
+			</if> 
+			<if test="map.pay_status_kind!=null and map.pay_status_kind!='' ">
+			and	 p.pay_status_kind = #{map.pay_status_kind}
+			</if> 
+		</where>
+  
+		 limit #{startRow},#{pageSize}
+</select> 
+
+<!-- 20160512.9
+计算用户超时订单数，超时七天的订单 -->
+<select id="countManagerAllUserOverTimeOrder" resultType="int">
+	  SELECT COUNT(o.id) 
+	   FROM user_order o ,ordercheck oc ,orderstatus s,paystatus p,c_car c,receiverinfo r ,c_user u ,backstatus bs
+	    <where>
+	     	(o.`orderStatus`=2 OR o.`orderStatus`=4)
+	 		AND TO_DAYS(NOW())-TO_DAYS(o.`endAt`)>7 
+	 		AND o.`backStatus`= 1 	
+	 		AND o.`orderCheck`= 1
+	 		AND o.`payStatus`= 2
+         	AND o.`c_id`= c.`id` 
+         	AND o.`u_id`= u.`id` 
+         	AND o.`payStatus` = p.`id` 
+         	AND o.`r_id`=r.`id` 
+			AND o.`orderCheck`=oc.`id` 
+			AND o.`orderStatus` =s.`id`
+			AND o.`backStatus`=bs.`id`
+			<if test="map.id!=null and map.id!='' ">
+			and	 o.id = #{map.id}
+			</if>
+			<if test="map.order_status_kind!=null and map.order_status_kind!='' ">
+			and	 s.order_status_kind = #{map.order_status_kind}
+			</if> 
+			<if test="map.order_check_kind!=null and map.order_check_kind!='' ">
+			and	 oc.order_check_kind = #{map.order_check_kind}
+			</if> 
+			<if test="map.pay_status_kind!=null and map.pay_status_kind!='' ">
+			and	 p.pay_status_kind = #{map.pay_status_kind}
+			</if> 
+		</where> 
+	</select>	
+	<!-- 20160512.9.00
+	用户超时订单列表，超时7天以上 -->
+	<select id="searchManagerAllUserOverTimeOrder" resultType="java.util.HashMap" >
+       SELECT 
+		o.`id`,o.`startAt`,o.`endAt`,o.`backAt`,o.`total`,
+		r.`receiveName`,r.`receiveIdentity`,r.`backAddress`,r.`receiveAddress`,r.`receivePhone`,
+		c.`license`,c.`brand`,c.`c_type`,
+		p.`pay_status_kind`,
+		oc.`order_check_kind`,
+		s.`order_status_kind`,
+		bs.`back_status_kind`
+		FROM user_order o ,ordercheck oc ,orderstatus s,paystatus p,c_car c,receiverinfo r ,c_user u,backstatus bs
+		<where>
+            (o.`orderStatus`=2 OR o.`orderStatus`=4)
+	 		AND TO_DAYS(NOW())-TO_DAYS(o.`endAt`)>7 
+		 	AND o.`backStatus`= 1 	
+	 		AND o.`orderCheck`= 1
+	 		AND o.`payStatus`= 2	    	
+         	AND o.`c_id`= c.`id` 
+         	AND o.`u_id`= u.`id` 
+         	AND o.`payStatus` = p.`id` 
+        	AND o.`r_id`=r.`id` 
+			AND o.`orderCheck`=oc.`id` 
+			AND o.`orderStatus` =s.`id`
+			AND o.`backStatus`=bs.`id`
+		
+			<if test="map.id!=null and map.id!='' ">
+			and	 o.id = #{map.id}
+			</if>
+			<if test="map.order_status_kind!=null and map.order_status_kind!='' ">
+			and	 s.order_status_kind = #{map.order_status_kind}
+			</if> 
+			<if test="map.order_check_kind!=null and map.order_check_kind!='' ">
+			and	 oc.order_check_kind = #{map.order_check_kind}
+			</if> 
+			<if test="map.pay_status_kind!=null and map.pay_status_kind!='' ">
+			and	 p.pay_status_kind = #{map.pay_status_kind}
+			</if> 
+		</where>
+  
+		 limit #{startRow},#{pageSize}
+</select> 
+
+
+<!-- 异步加载超时和未支付订单信息列表 -->
+	<select id="selectOrderUpaingAndOvertimeOrder" resultType="com.order.Order">
+		SELECT * FROM user_order o
+		 WHERE 
+		 (o.`orderStatus`=4 OR o.`orderStatus`=2 OR o.`orderStatus`=7)
+		 AND o.`backStatus`=1
+	</select>
+	<!-- 管理员更新订单 -->
+	<update id="ManagerUpdateOrder" parameterType="map">
+	UPDATE user_order o SET  o.`startAt`=#{map.startAt},o.`endAt`=#{map.endAt}
+ 	WHERE id=#{map.id}
+</update>
+</mapper>

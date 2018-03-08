@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>续租</title>
+<script type="text/javascript" src="../../jquery-easyui-1.4.4/jquery.min.js"></script>
+<script type="text/javascript" src="../../jquery-easyui-1.4.4/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../../jquery-easyui-1.4.4/locale/easyui-lang-zh_CN.js"></script>
+<link rel="stylesheet" type="text/css" href="../../jquery-easyui-1.4.4/themes/metro/easyui.css">
+<link rel="stylesheet" type="text/css" href="../../jquery-easyui-1.4.4/themes/icon.css">
+
+</head>
+<body>
+	<div style="padding: 10px 60px 20px 10px">
+		 <form id="orderUpdateForm" method="post">
+		 	<table cellpadding="5">
+		 		<tr>
+		 			<td align="right">订单编号：</td>
+		 			<td><input class="easyui-textbox" type="text" name="id" /></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">用户编号：</td>
+		 			<td><input class="easyui-textbox" type="text" name="u_id"  /></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">汽车编号：</td>
+		 			<td><input class="easyui-textbox" type="text" name="c_id"  /></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">汽车颜色：</td>
+		 			<td><input class="easyui-textbox" type="text" name="c_color"  /></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">汽车类型：</td>
+		 			<td><input class="easyui-textbox" type="text" name="c_type"  /></td>
+		 		</tr>
+		 		  <tr>
+		 			<td align="right">订单开始时间</td>
+		 			<td><input id="startAt"  class="easyui-datebox" name="startAt" required="required"/> </td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">订单结束时间</td>
+		 			<td><input id="endAt"  class="easyui-datebox" name="endAt" required="required"/></td>
+		 		</tr> 
+		 	</table>
+		 </form>
+	</div>
+	<div style="padding: 5px;">
+		<a id="selectForm" href="javascript:void(0);"	class="easyui-linkbutton" data-options="iconCls:'icon-ok',text:'查询'"></a>
+		<a id="submitFormSave" href="javascript:void(0);"	class="easyui-linkbutton" data-options="iconCls:'icon-ok',text:'修改'"></a>
+		<a id="FormUndo" href="javascript:void(0);"	class="easyui-linkbutton" data-options="iconCls:'icon-undo',text:'取消'"></a>
+	</div>
+</body>
+</html>

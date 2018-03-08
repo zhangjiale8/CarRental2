@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="首页" />
+<title>首页</title>
+<link type="text/css" rel="stylesheet" href="css/global.css" />
+<script src="js/jquery-1.7.min.js"></script>
+<!--[if lt IE 7]>
+<script type="text/javascript" src="js/unitpngfix.js"></script>
+<![endif]-->
+<script>
+$(document).ready(function()
+{ 
+ $(".slvh").each(function(){ 
+ var maxwidth=28; 
+ if($(this).text().length>maxwidth){ 
+ $(this).text($(this).text().substring(0,maxwidth)); 
+ $(this).html($(this).html()+' ...'); 
+ } }); });
+ 
+$(document).ready(function()
+{ 
+ $(".ywzsdes").each(function(){ 
+ var maxwidth=140; 
+ if($(this).text().length>maxwidth){ 
+ $(this).text($(this).text().substring(0,maxwidth)); 
+ $(this).html($(this).html()+' ...'); 
+ } }); }); 
+ 
+
+</script>
+</head>
+
+<body>
+<div class="headbg">
+  <div class="header">
+    <div class="clear"></div>
+    <img class="logo" src="images/logo.png" alt="" title="" />
+    <ul class="topnav">
+    <!--  <li class="topseled"><a href="index.html">首页</a></li> -->
+      <li><a href="http://kaoshi.jxedt.com/10098/">驾校服务</a></li>
+     <!--  <li><a href="rental.html">我要租车</a></li> -->
+      <li><a href="consumerLogin.jsp">会员登录</a></li>
+      <li><a href="managerLogin.jsp">管理员登录</a></li>
+       <li><a href="table.html">boot表格</a></li>
+    </ul>
+    <div class="clear"></div>
+  </div>
+</div>
+<div class="bannbg">
+  <div class="banner">
+    <div class="quicknav"> <span class="quktit"></span>
+      <div class="clear"></div>
+    </div>
+    
+  </div>
+</div>
+<div class="container">
+  <div class="conlinone">
+    <div class="zncompan">
+      <h1>站内新闻</h1>
+      <ul id="newsContainer">
+       <!-- 	<li>
+       		<a href="news/newsInfo.html">
+      			 <span>富安达运输有限公富安达运输有限公司富安达运输有限公司司</span> 
+					&nbsp;
+				<span >2016-12-45</span>
+			</a>
+		</li>   -->    
+      </ul>
+       <span class="qukmore_sec"><a href="news/newsList.html">More &gt;&gt;</a></span> </div>
+    <div class="zncompan_thr">
+      <h1>系统功能介绍</h1>
+      <div class="ywzs"> <img src="images/abimg.jpg" alt="" title="" />
+        <p class="ywzsdes">汽车服务网站平台提供各种汽车保养和维修套餐及服务网站汽车服务网站平台提供各种汽车保养和维修套餐及服务网站会员可通过平台定制自己需要的服务。同时，网站平台定期推出各种优惠活动，敬请广大用户关会员可通过平台定制自己需要的服务。同时，网站平台定期推出各种优惠活的服务。同时，网站平台定期推出各种优惠活动，敬请广大用户关注的服务。同时，网站平台定期推出各种优惠活动，敬请广大用户关注动，敬请广大用户关注</p>
+        <span class="qukmore_sec"><a href="compyIntroduce.html">More &gt;&gt;</a></span> </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="conlinthre">
+    <div class="friendlink">
+    	&nbsp;&nbsp;
+      <ul>
+        <li>&nbsp;<a href="http://www.autohome.com.cn"><img src="images/fridlingk1.jpg" alt="" title="" /></a>&nbsp;</li>
+        <li>&nbsp;<a href="http://www.bimawen.com"><img src="images/fridlingk2.jpg" alt="" title="" /></a>&nbsp;</li>
+        <li>&nbsp;<a href="http://www.chebang.com"><img src="images/fridlingk3.jpg" alt="" title="" /></a>&nbsp;</li>
+        <li>&nbsp;<a href="http://www.csw789.roboo.com"><img src="images/fridlingk4.jpg" alt="" title="" /></a>&nbsp;</li>
+        <li>&nbsp;<a href="http://www.icar168.net"><img src="images/fridlingk5.jpg" alt="" title="" /></a>&nbsp;</li>
+      </ul>
+      
+  </div>
+ </div>
+  
+
+<div class="footbg">
+  <div class="footer">
+    <div class="foot_l">
+      <div class="menu_foot">
+        <p>关于我们</p>
+        <ul>
+          <li><a href="#">关于汽车服务</a></li>
+          <li><a href="#">关于我们</a></li>
+          <li><a href="#">平台介绍</a></li>
+          <li><a href="#">平台宗旨</a></li>
+        </ul>
+      </div>
+      <div class="clear"></div>
+      <div class="copyright">Copyright &copy; 2016.Company name All rights reserved.<a target="_blank" href="http://www.mycodes.net/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a> - More Templates <a href="http://www.mycodes.net/" target="_blank" title="源码之家">源码之家</a> </div>
+    </div>
+    <div class="foot_r">
+      <div class="title">关于我们</div>
+      <div class="detail">汽车服务网站平台提供各种汽车保养和维修套餐及服务网站汽车服务网站平台提供各种汽车保养和维修套餐及服务网站会员可通过平台定制自己需要的服务。同时，网站平台定期推出各种优惠活动...</div>
+    </div>
+  </div>
+</div>
+
+</body>
+<script src="js/header/header.js"></script>
+<script src="js/header/SystemCancelUnpayingOrder.js"></script>
+<script type="text/javascript"
+	src="plug-in/dateFormat.js"></script>
+</html>

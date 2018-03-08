@@ -1,0 +1,94 @@
+﻿<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:cache="http://www.springframework.org/schema/cache" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context-4.1.xsd
+	http://www.springframework.org/schema/cache
+	http://www.springframework.org/schema/cache/spring-cache-4.1.xsd
+	http://www.springframework.org/schema/task
+	http://www.springframework.org/schema/task/spring-task-4.1.xsd
+	http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
+	http://mybatis.org/schema/mybatis-spring 
+	http://mybatis.org/schema/mybatis-spring.xsd
+	
+	">
+
+	<context:annotation-config />
+	
+	<mvc:default-servlet-handler/>
+	<context:component-scan
+		base-package="com.base,com.user,com.car,com.order,com.manager,com.receiver,com.systemnews,com.systeminfo" />
+	<cache:annotation-driven />
+	<mvc:annotation-driven />
+	<mvc:resources mapping="/static/**" location="/static/" />
+
+	<!-- <mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/login.ctrl" />
+			
+			<mvc:exclude-mapping path="/logout.ctrl" />
+			<bean class="com.base.LoggedInInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors> -->
+
+	<task:annotation-driven executor="pincodeExecutor"/>
+	<task:executor id="pincodeExecutor" pool-size="50"/>
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<mybatis:scan base-package="com.base,com.user,com.car,com.order,com.manager,com.receiver,com.systemnews,com.systeminfo" />
+
+	<bean id="handlerMapping"
+		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter" />
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+	
+		<property name="url" value="jdbc:mysql://localhost:3306/CarRental2?useUnicode=true&amp;characterEncoding=utf8"></property>
+		<property name="username" value="root" />
+		<property name="password" value="root" />
+	
+		<property name="initialSize" value="5" />
+		<property name="maxTotal" value="5" />
+		<property name="maxIdle" value="5" />
+		<property name="maxWaitMillis" value="5000" />
+		<property name="logAbandoned" value="true" />
+		<property name="removeAbandonedOnBorrow" value="true" />
+		<property name="removeAbandonedOnMaintenance" value="true" />
+		<property name="removeAbandonedTimeout" value="12" />
+	</bean>
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
+		<property name="caches">
+			<set>
+				<bean
+					class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
+					<property name="name" value="products" />
+				</bean>
+			</set>
+		</property>
+	</bean>
+	
+	<!-- 文件上传 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
+        <property name="defaultEncoding" value="utf-8"></property>   
+        <property name="maxUploadSize" value="10240"></property>  
+        <property name="maxInMemorySize" value="5120"></property>
+   </bean> 
+   
+</beans>

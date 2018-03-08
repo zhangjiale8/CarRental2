@@ -1,0 +1,77 @@
+<!-- 表格设置 -->
+<table id="userInfo"> 
+</table>
+<!-- toolber -->
+<div id="userInfoTb">
+	<form id="userSearchForm" method="get">
+		用户名：<input class="easyui-textbox" type="text" id="username" name="username" style="width:130px"/>&nbsp;
+		性别：<input class="easyui-textbox" type="text" id="sex" name="sex"  style="width:130px"/>&nbsp;
+	<a href="javascript:;" class="easyui-linkbutton" onclick="userInfoSearch()" data-options="iconCls:'icon-search'" style="width:80px">查询</a>
+	<a href="javascript:;" class="easyui-linkbutton" onclick="userInfoRedo()" data-options="iconCls:'icon-redo'" style="width:80px">重置</a>
+      </form>
+	<a id="userInfoEdit" href="javascript:;"
+	class="easyui-linkbutton" data-options="iconCls:'icon-edit',text:'修改'"></a>
+</div>
+<!-- 新增/修改 window -->
+<div id="userInfoWindow" class="easyui-window" style="width: 400px"
+	data-options="collapsible:false,minimizable:false,maximizable:false,draggable:false,resizable:false,closed:true,modal:true,closable:false">
+	<div style="padding: 10px 60px 20px 10px">
+		 <form id="userInfoForm" method="post">
+		 	<table cellpadding="5">
+		 	    <tr>
+		 	    <td align="right">用户编号：</td>
+		 			<td><input class="easyui-textbox" type="text" id="id" name="id" data-options="editable:false"/></td>
+		 	    </tr>
+		 		<tr>
+		 			<td align="right">用户姓名：</td>
+		 			<td><input class="easyui-textbox" type="text" id="username" name="username" data-options="editable:false"/></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">用户密码：</td>
+		 			<td><input class="easyui-textbox" type="text" id="password" name="password" data-options="required:true" /></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">审核状态：</td>
+		 			<td><input class="easyui-textbox" type="text" id="status" name="status" data-options="editable:false" /></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">性别：</td>
+		 			<td>
+		 			<select id="sex" class="easyui-combobox" id="sex" name="sex" style="width:200px;">   
+                     <option>男</option>   
+                     <option>女</option>   
+                   </select>  
+		 			</td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">真实姓名：</td>
+		 			<td><input class="easyui-textbox" type="text" id="fullname" name="fullname" data-options="required:true" /></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">身份证号：</td>
+		 			<td><input class="easyui-textbox" type="text" id="identity" name="identity" data-options="prompt:'身份证号',iconWidth:38,required:true,validType:['personId']" /></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">手机号码：</td>
+		 			<td><input class="easyui-textbox" type="text" id="phone" name="phone" data-options="prompt:'手机号码',iconWidth:38,required:true,validType:['mobileNumber']" /></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">邮箱：</td>
+		 			<td><input class="easyui-textbox" type="text" id="email" name="email" data-options="prompt:'邮箱',iconWidth:38,validType:['email']" /></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">家庭住址：</td>
+		 			<td><input class="easyui-textbox" type="text" id="address" name="address" data-options="required:true" /></td>
+		 		</tr>
+		 	</table>
+		 </form>
+	</div>
+	<div style="text-align: center; padding: 5px;">
+		<a id="userInfoSave" href="javascript:void(0);"	class="easyui-linkbutton" data-options="iconCls:'icon-ok',text:'保存'"></a>
+		<a id="userInfoFormUndo" href="javascript:void(0);"	class="easyui-linkbutton" data-options="iconCls:'icon-undo',text:'取消'"></a>
+	</div>
+</div>
+<script type="text/javascript"
+	src="ManagerPages/js/user/ManagerUserInfo.js"></script>
+<script type="text/javascript"
+	src="ManagerPages/base/validate.js""></script>

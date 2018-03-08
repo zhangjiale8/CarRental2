@@ -1,0 +1,58 @@
+
+	<div id="addCarDiv" style="width: 250px" >
+		<div class="easyui-panel" title="汽车租赁管理系统-增加车辆" >
+			<form id="addCar" method="post">
+				<div>
+					车牌号码：<input id="license" class="easyui-textbox" name="license" data-options="prompt:'车牌号码',iconWidth:38,required:true,validType:['license']"/>
+				</div><br/>
+				<div >
+					车辆颜色：<input id="color" class="easyui-textbox" name="color"  data-options="required:true" />
+				</div><br/>
+				<div >
+					车辆品牌：<input id="brand" class="easyui-textbox" name="brand" data-options="required:true" />
+				</div><br/>
+				<div >
+					车辆类型：<input id="c_type"  class="easyui-textbox" name="c_type" data-options="required:true" />
+				</div><br/>
+				<div >
+					车辆排量：<input id="displacement"  class="easyui-textbox" name="displacement" data-options="required:true" />
+				</div><br/>
+				<div >
+					车辆等级：
+					<select  id="level_kind"  name="level_kind" style="width:100px;">
+						<option value="经济型" selected = "selected">经济型</option>
+						<option value="家用型">家用型</option>
+						<option value="商务型">商务型</option>
+						<option value="豪华型">豪华型</option>
+					</select>
+				</div><br/>
+				<div >
+					车辆状态：
+					<select  id="status_kind"  name="status_kind" style="width:100px;">
+						<option value="未租赁" selected = "selected">未租赁</option>
+						<option value="已租赁">已租赁</option>
+						<option value="故障">故障</option>
+						<option value="预定中">预定中</option>
+					</select>
+				</div><br/>
+				<div >
+					出租价格：<input id="price"  class="easyui-textbox" name="price" data-options="required:true" />
+				</div><br/>
+				<div >
+					车辆描述：<input id="c_describe" type="text" class="easyui-textbox" name="c_describe" data-options="multiline:true,required:true" style="width:200px;height:150px" />
+				</div><br/>
+
+			</form><br/><br/>
+			<div>
+				<a href="javascript:void(0);" class="easyui-linkbutton" onclick="submitaddCarForm()" data-options="iconCls:'icon-ok'" > <span style="font-size: 14px;">提交</span>
+				</a>
+				<a  class="easyui-linkbutton" onclick="clearForm()" data-options="iconCls:'icon-help'" > <span style="font-size: 14px;">重置</span>
+				</a>			
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript"
+	src="ManagerPages/js/car/ManagerAddCar.js"></script>
+	<script type="text/javascript"
+	src="ManagerPages/base/validate.js""></script>
+

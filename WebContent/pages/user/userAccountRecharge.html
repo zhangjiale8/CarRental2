@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>充值</title>
+<link rel="stylesheet" type="text/css" href="../jquery-easyui-1.4.4/themes/metro/easyui.css">
+<link rel="stylesheet" type="text/css" href="../jquery-easyui-1.4.4/themes/icon.css">
+<script type="text/javascript" src="../jquery-easyui-1.4.4/jquery.min.js"></script>
+<script type="text/javascript" src="../jquery-easyui-1.4.4/jquery.easyui.min.js"></script>
+
+<script type="text/javascript" src="../jquery-easyui-1.4.4/locale/easyui-lang-zh_CN.js"></script>
+
+
+
+</head>
+<body>
+	<div style="padding: 10px 60px 20px 10px">
+		 <form id="RechargeForm" method="post">
+		 	<table cellpadding="5">
+		 		<tr>
+		 			<td align="right">账户余额：</td>
+		 			<td><input class="easyui-textbox" type="text" name="account" 
+		 			data-options="editable:false" /></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">充值金额：</td>
+		 			<td><input class="easyui-textbox" type="text" name="recharge" required="required"  /></td>
+		 		</tr>
+		 	</table>
+		 </form>
+	</div>
+	<div style="padding: 5px;">
+		&nbsp;&nbsp;&nbsp;&nbsp;<a id="RechargeFormSave" href="javascript:void(0);"	class="easyui-linkbutton" data-options="iconCls:'icon-ok',text:'充值'"></a>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a id="RechargeFormUndo" href="javascript:void(0);"	class="easyui-linkbutton" data-options="iconCls:'icon-undo',text:'取消'"></a>
+	</div>
+	<script type="text/javascript" src="pages/js/user/userRecharge.js"></script>
+</body>
+
+</html>

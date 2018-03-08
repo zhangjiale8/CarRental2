@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>汽车详情页</title>
+<link rel="stylesheet" type="text/css" href="../../jquery-easyui-1.4.4/themes/metro/easyui.css" />
+<link rel="stylesheet" type="text/css" href="../../jquery-easyui-1.4.4/themes/icon.css" />
+<script type="text/javascript" src="../../jquery-easyui-1.4.4/jquery.min.js"></script>
+<script type="text/javascript" src="../../jquery-easyui-1.4.4/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../../jquery-easyui-1.4.4/locale/easyui-lang-zh_CN.js"></script>
+</head>
+<body background="../../images/注册背景.jpg">
+
+	<div id="eachCarInfoDiv" style="width: 300px" >
+		<div class="easyui-panel" title="汽车租赁管理系统-提交订单" >
+			<form id="eachCarInfo" method="post">
+				<div>
+					车牌号码：<input id=license class="easyui-textbox" name="license" data-options="editable:false" />
+				</div><br/>
+				<div >
+					车辆颜色：<input id="color" class="easyui-textbox" name="color"  data-options="editable:false" />
+				</div><br/>
+				<div >
+					车辆品牌：<input id="brand" class="easyui-textbox" name="brand" data-options="editable:false" />
+				</div><br/>
+				<div >
+					车辆类型：<input id="c_type"  class="easyui-textbox" name="c_type" data-options="editable:false" />
+				</div><br/>
+				<div >
+					车辆排量：<input id="displacement"  class="easyui-textbox" name="displacement" data-options="editable:false" />
+				</div><br/>
+				<div >
+					车辆等级：<input id="level_kind"  class="easyui-textbox" name="level_kind" data-options="editable:false" />
+				</div><br/>
+				<div >
+					出租价格：<input id="price"  class="easyui-textbox" name="price" data-options="editable:false" />
+				</div><br/>
+				<div >
+					车辆描述：<input id="c_describe" type="text" class="easyui-textbox" name="c_describe" data-options="multiline:true,editable:false" style="width:200px;height:100px" />
+				</div><br/>
+			</form><br/>
+			<div>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="javascript:void(0);" class="easyui-linkbutton" onclick="receiverInfoForm()" data-options="iconCls:'icon-ok'" > <span style="font-size: 14px;">租车</span>
+				</a>
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				<a  href="../../rental.html" class="easyui-linkbutton" data-options="iconCls:'icon-ok'"> <span style="font-size: 14px;">取消</span>
+				</a><br/>		
+			</div>
+		</div>
+	</div>
+	
+	<!--新增窗口  -->
+	<!-- <div id="addOrderWindow" class="easyui-window" style="width: 400px"
+	data-options="collapsible:false,minimizable:false,maximizable:false,draggable:false,resizable:false,closed:true,modal:true,closable:false">
+	<div style="padding: 10px 60px 20px 10px">
+		 <form id="addOrderInfoForm" method="post">
+		 	<table cellpadding="5">
+		 		<tr>
+		 			<td align="right">取车人姓名：</td>
+		 			<td><input class="easyui-textbox" type="text" id="receiveName" name="receiveName" data-options="required:true"/></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">身份证号：</td>
+		 			<td><input class="easyui-textbox" type="text" id="receiveIdentity" name="receiveIdentity" data-options="required:true" /></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">手机号码：</td>
+		 			<td><input class="easyui-textbox" type="text" id="receivePhone" name="receivePhone" data-options="required:true" /></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">取车地址：</td>
+		 			<td><input class="easyui-textbox" type="text" id="receiveAddress" name="receiveAddress" data-options="required:true" /></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">还车地址：</td>
+		 			<td><input class="easyui-textbox" type="text" id="backAddress" name="backAddress" data-options="required:true" /></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">开始时间：</td>
+		 			<td><input class="easyui-datebox" type="text" id="startAt" name="startAt" data-options="required:true,editable:false" /></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">结束时间：</td>
+		 			<td><input class="easyui-datebox" type="text" id="endAt" name="endAt" data-options="required:true,editable:false" /></td>
+		 		</tr>
+		 	</table>
+		 </form>
+	</div>
+	<div style="text-align: center; padding: 5px;">
+		<a id="OrderInfoSave" href="javascript:void(0);"	class="easyui-linkbutton" data-options="iconCls:'icon-ok',text:'保存'"></a>
+		<a id="addOrderInfoFormUndo" href="javascript:void(0);"	class="easyui-linkbutton" data-options="iconCls:'icon-undo',text:'取消'"></a>
+	</div>
+</div>
+ -->
+</body>
+<script type="text/javascript" src="../js/car/eachCarInfo.js"></script>
+</html>

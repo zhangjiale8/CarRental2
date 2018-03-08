@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.systeminfo.SysteminfoMapper">
+	
+	
+	<!--  新增信息提醒-->
+	<insert id="addSystemInfo" parameterType="map" >
+		insert into systeminfo (u_id,w_title,w_body,w_publishAt,w_status) 
+		VALUES (#{map.userId},#{map.w_title},#{map.w_body},NOW(),'未读')
+	</insert>
+	
+	<!-- 
+	前台
+	异步加加载系统信息列表 -->
+	<select id="getSysteminfoByUserId" resultType="com.systeminfo.Systeminfo">
+		SELECT * FROM systeminfo si
+		WHERE
+		si.`w_status`='未读'
+		AND si.`u_id` = #{map.userId}
+	</select>
+	
+	<!-- 后台计算未读信息数 -->
+	<select id="countSystemInfoUnReaded" resultType="int">
+		SELECT COUNT(si.id) 
+		FROM systeminfo si 
+		WHERE
+		si.`w_status`='未读'
+		AND si.`u_id` = #{map.userId}
+	</select>
+	<!-- 后台查询未读信息列表 -->
+	<select id="searchSystemInfoUnReaded" resultType="map">
+		SELECT * 
+		FROM systeminfo si 
+		WHERE
+		si.`w_status`='未读'
+		AND si.`u_id` = #{map.userId}
+		order by si.id DESC limit #{startRow},#{pageSize}
+	</select>
+	<!-- 后台计算已读信息数 -->
+	<select id="countSystemInfoReaded" resultType="int">
+		SELECT COUNT(si.id) 
+		FROM systeminfo si 
+		WHERE
+		si.`w_status`='已读'
+		AND si.`u_id` = #{map.userId}
+	</select>
+	<!-- 后台查询已读信息列表 -->
+	<select id="searchSystemInfoReaded" resultType="map">
+		SELECT * 
+		FROM systeminfo si 
+		WHERE
+		si.`w_status`='已读'
+		AND si.`u_id` = #{map.userId}
+		order by si.id DESC limit #{startRow},#{pageSize}
+	</select>
+	<!-- 删除系统信息 -->
+	<delete id="searchSystemInfoDel">
+	
+	DELETE FROM systeminfo WHERE id=#{id}
+	
+	</delete>
+	<update id="SystemInfoUpdate" >
+	update systeminfo si set si.w_status='已读' where id=#{id}
+	
+	</update>
+</mapper>

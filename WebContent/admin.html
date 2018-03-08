@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title> 会员中心- 后台</title>
+<link rel="stylesheet" type="text/css" href="jquery-easyui-1.4.4/themes/metro/easyui.css">
+<link rel="stylesheet" type="text/css" href="jquery-easyui-1.4.4/themes/icon.css">
+<script type="text/javascript" src="jquery-easyui-1.4.4/jquery.min.js"></script>
+<script type="text/javascript" src="jquery-easyui-1.4.4/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="jquery-easyui-1.4.4/locale/easyui-lang-zh_CN.js"></script>
+
+<!-- <script type="text/javascript" src="pages/base/base.js"></script>-->
+<script type="text/javascript" src="pages/js/validate.js"></script>
+</head>
+<body class="easyui-layout">
+	<div data-options="region:'south',height:30" style="text-align: center;">
+	<span  style="height: 20px; display: inline-block;">用户名：<span id="username"></span></span> 
+	<a href="javascript:;" class="easyui-linkbutton" onclick="consumerlogout()" data-options="iconCls:'icon-door-out',plain:true">登出</a>
+	<a href="rental.html" class="easyui-linkbutton"  data-options="iconCls:'icon-redo',plain:true">会员中心首页</a>
+	
+	</div>
+
+	<div data-options="region:'west',width:200" title="导航">
+		<div class="easyui-accordion" data-options="fit:true,border:false" id="menu-accordion"></div>
+	</div>
+	<div data-options="region:'center'">
+		<div id="main-tabs" class="easyui-tabs" data-options="fit:true,border:false,plain:true">
+			<div title="首页" data-options="href:'js/admin/_usercontent.html'" style="padding: 10px"></div>
+		</div>
+	</div>
+	
+</body>
+<script type="text/javascript" src="js/admin/admin.js"></script>
+
+</html>

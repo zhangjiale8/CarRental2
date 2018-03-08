@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.systemnews.SystemnewsMapper">
+	<select id="searchSystemnewsList" resultType="com.systemnews.Systemnews">
+	SELECT sn.`id`,sn.`title`,sn.`body`,sn.`publishAt`,m.`m_username` 
+	FROM systemnews sn,manager m
+	WHERE sn.`m_id`=m.`id`
+	ORDER BY sn.`publishAt` DESC
+	</select>
+	<select id="selectNewsById" resultType="com.systemnews.Systemnews">
+		SELECT * FROM systemnews sn WHERE sn.`id`=#{map.newsId} 
+	
+	</select>
+	
+	<!--  计算新闻数-->
+	<select id="countAllnews" resultType="int">
+	   SELECT COUNT(sn.`id`) 
+	   FROM systemnews sn,manager m 
+	   <where>
+	     sn.`m_id`=m.`id`
+			<if test="map.title!=null and map.title!='' ">
+			and	 sn.title = #{map.title}
+			</if>
+			<if test="map.publishAt!=null and map.publishAt!='' ">
+			and	 sn.publishAt = #{map.publishAt}
+			</if> 
+		</where> 
+	</select>	
+	<!-- 所有用户的订单列表 -->
+	<select id="searchAllnews" resultType="java.util.HashMap" >
+      SELECT sn.`id`,sn.`title`,sn.`body`,sn.`publishAt`,m.`m_username` 
+      FROM systemnews sn,manager m			
+         <where>
+	     sn.`m_id`=m.`id`
+			<if test="map.title!=null and map.title!='' ">
+			and	 sn.title = #{map.title}
+			</if>
+			<if test="map.publishAt!=null and map.publishAt!='' ">
+			and	 sn.publishAt = #{map.publishAt}
+			</if> 
+		</where> 
+  		ORDER BY sn.`publishAt` DESC
+		 limit #{startRow},#{pageSize}
+</select> 
+
+
+<!--  后台 删除新闻-->
+
+	<delete id="newsDel" parameterType="map">
+	DELETE FROM systemnews WHERE id=#{map.id}
+	</delete>
+	
+	
+	<!--车辆更新  -->
+	<update id="updatenews" parameterType="map">
+		update systemnews 
+		set  
+		title=#{map.title}, publishAt=#{map.publishAt}, body=#{map.body}
+		where id=#{map.id}
+	</update>
+	
+	
+	<!--  新增汽车-->
+	<insert id="addnews" parameterType="map" >
+		insert into systemnews (m_id,title,body,publishAt) 
+		VALUES (#{map.m_id},#{map.title},#{map.body},NOW())
+	</insert>
+</mapper>

@@ -1,0 +1,48 @@
+<!-- 表格设置 -->
+<table id="SystemInfoReadedInfo"> 
+</table>
+<!-- toolber -->
+<div id="SystemInfoReadedInfoTb">
+	 <a id="SystemInfoReadedInfoEdit" href="javascript:;"
+	class="easyui-linkbutton" data-options="iconCls:'icon-edit',text:'查看信息'"></a> 
+	<a id="SystemInfoReadedInfoDel" href="javascript:;"
+	class="easyui-linkbutton" data-options="iconCls:'icon-remove',text:'删除'"></a>
+</div>
+<!-- 详情窗口 -->
+<div id="SystemInfoReadedInfoWindow" class="easyui-window" style="width: 400px"
+	data-options="collapsible:false,minimizable:false,maximizable:false,draggable:false,resizable:false,closed:true,modal:true,closable:false">
+	<div style="padding: 10px 60px 20px 10px">
+		 <form id="SystemInfoReadedInfoForm" method="post">
+		 	<table cellpadding="5">
+		 	    <tr>
+		 	    <td align="right">信息编号：</td>
+		 			<td><input class="easyui-textbox" type="text" id="id" name="id" data-options="editable:false"/></td>
+		 	    </tr>
+		 		<tr>
+		 			<td align="right">信息标题：</td>
+		 			<td><input class="easyui-textbox" type="text" id="w_title" name="w_title" data-options="editable:false"/></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">信息正文：</td>
+		 			<td><input class="easyui-textbox" type="text" id="w_body" name="w_body" data-options="multiline:true,editable:false" style="width:200px;height:100px" /></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">信息状态：</td>
+		 			<td><input class="easyui-textbox" type="text" id="w_status" name="w_status" data-options="editable:false" /></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">发布时间：</td>
+		 			<td><input id="w_publishAt" type="text" class="easyui-textbox" name="w_publishAt"  data-options="editable:false"/> </td>
+		 		</tr>
+		 	</table>
+		 </form>
+	</div>
+	<div style="text-align: center; padding: 5px;">
+		<a id="SystemInfoReadedInfoSave" href="javascript:void(0);"	class="easyui-linkbutton" data-options="iconCls:'icon-ok',text:'保存'"></a>
+		<a id="SystemInfoReadedInfoFormUndo" href="javascript:void(0);"	class="easyui-linkbutton" data-options="iconCls:'icon-undo',text:'取消'"></a>
+	</div>
+</div>
+<script type="text/javascript"
+	src="plug-in/dateFormat.js"></script>
+<script type="text/javascript"
+	src="pages/js/SystemInfo/SystemInfoReaded.js"></script>

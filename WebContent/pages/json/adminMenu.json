@@ -1,0 +1,110 @@
+[ 
+{
+	"accordionTile" : "个人信息管理",
+	"accordionSelected" : true,
+	"treeData" : [ 
+	{
+		"id" : 101,
+		"text" : "个人信息查询修改",
+		"iconCls" : "",
+		"state" : "open",
+		"attributes" : {
+			"url" : "pages/user/userInfo.html"
+		}
+	},{
+		"id" : 101,
+		"text" : "充值",
+		"iconCls" : "",
+		"state" : "open",
+		"attributes" : {
+			"url" : "pages/user/userAccountRecharge.html"
+		}
+	}  
+	]
+}
+,{
+	"accordionTile" : "取车人管理",
+	"accordionSelected" : false,
+	"treeData" : [ 
+		{
+		"id" : 201,
+		"text" : "取车人信息列表",
+		"iconCls" : "",
+		"attributes" : {
+			"url" : "pages/receiver/backReceiverList.html"
+		}
+		},{
+		"id" : 201,
+		"text" : "新增取车人信息",
+		"iconCls" : "",
+		"attributes" : {
+			"url" : "pages/receiver/addReceiver.html"
+		}
+		} 
+		 ]
+   },
+   {
+	"accordionTile" : "租赁管理",
+	"accordionSelected" : false,
+	"treeData" : [ 
+		{
+		"id" : 301,
+		"text" : "全部订单",
+		"iconCls" : "",
+		"attributes" : {
+			"url" : "pages/order/userAllOrder.html"
+		}
+	
+		} ,
+		{
+		"id" : 301,
+		"text" : "待审核",
+		"iconCls" : "",
+		"attributes" : {
+			"url" : "pages/order/userCheckingOrder.html"
+		}
+		} ,
+		{
+		"id" : 301,
+		"text" : "未支付",
+		"iconCls" : "",
+		"attributes" : {
+			"url" : "pages/order/userPayingOrder.html"
+		}
+	
+		} ,
+		{
+		"id" : 301,
+		"text" : "待完成",
+		"iconCls" : "",
+		"attributes" : {
+			"url" : "pages/order/userGoingOrder.html"
+		}
+	
+		}
+		 ]
+   },{
+	"accordionTile" : "系统信息管理",
+	"accordionSelected" : true,
+	"treeData" : [ 
+	{
+		"id" : 401,
+		"text" : "未读信息",
+		"iconCls" : "",
+		"state" : "open",
+		"attributes" : {
+			"url" : "pages/SystemInfo/SystemInfoUnReaded.html"
+		}
+	},{
+		"id" : 402,
+		"text" : "已读信息",
+		"iconCls" : "",
+		"state" : "open",
+		"attributes" : {
+			"url" : "pages/SystemInfo/SystemInfoReaded.html"
+		}
+	}  
+	]
+}
+   ]
+ 

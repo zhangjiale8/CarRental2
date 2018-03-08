@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{yyMMddHHmmss} %level{length=1} %msg%n" />
+		</Console>
+		<RollingFile name="controller-appender" fileName="${sys:catalina.home}/logs/backend/controller.log" filePattern="logs/backend/controller_%d{yyMMddHHmmss}.log">
+			<PatternLayout>
+				<Pattern>%d{yyMMddHHmmss} %level{length=3} %msg%n</Pattern>
+			</PatternLayout>
+			<Policies>
+				<SizeBasedTriggeringPolicy size="1 MB" />
+			</Policies>
+		</RollingFile>
+		<RollingFile name="service-appender" fileName="${sys:catalina.home}/logs/backend/service.log" filePattern="logs/backend/service_%d{yyMMddHHmmss}.log">
+			<PatternLayout>
+				<Pattern>%d{yyMMddHHmmss} %level{length=3} %msg%n</Pattern>
+			</PatternLayout>
+			<Policies>
+				<SizeBasedTriggeringPolicy size="1 MB" />
+			</Policies>
+		</RollingFile>
+	</Appenders>
+	<Loggers>
+		<Root level="ERROR">
+			<AppenderRef ref="Console" />
+		</Root>
+		<Logger name="org.springframework" level="ERROR" additivity="false">
+			<AppenderRef ref="Console" />
+		</Logger>
+		<Logger name="controller" level="INFO" additivity="false">
+			<AppenderRef ref="controller-appender" />
+		</Logger>
+		<Logger name="service" level="INFO" additivity="false">
+			<AppenderRef ref="service-appender" />
+		</Logger>
+	</Loggers>
+</Configuration>

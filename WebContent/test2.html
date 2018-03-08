@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>时间</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script>
+
+function show(){
+	   var mydate = new Date();
+	   var str = "" + mydate.getFullYear() + "-";
+	   if((mydate.getMonth()+1)>0&&(mydate.getMonth()+1)<10){
+		   str +="0"+ (mydate.getMonth()+1) + "-";
+	   }else{
+		   str += (mydate.getMonth()+1) + "-";
+	   }
+	   
+	   if(mydate.getDate()>0&&mydate.getDate()<10){
+		   str +="0"+ mydate.getDate();
+	   }else{
+		   str += mydate.getDate();
+	   }
+	  
+	   return str;
+	  }
+	  
+	function fun_submit(){
+		/* var　 str　 =　 "2010-03-22";　
+		var val = Date.parse(str);
+		var newDate = new Date(val);
+		alert(newDate); */
+		/* var Datein = document.getElementById("Datein").value;
+ 
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date d  = Date d1=(Date)sdf.parse(DateTime(datein)); */
+		/* var temper="2009-6-28 15:23"
+			var dt = new Date(temper.replace("-","/"))
+			alert(dt) */
+		/* 	var dt = new Date("2015/5/10 10:10:10");
+		alert(dt); */
+		
+		var s = "2009-06-22";
+		var dt = Date.parse(s.replace(/-/g,"/"));
+		dt = new Date(dt);
+		alert(dt.getFullYear());
+		var date1 = new Date();
+		alert(date1.getFullYear()+"-"+(date1.getMonth()+1)+"-"+date1.getDate())
+		var date2 = new Date(date1);
+		date2.setDate(date1.getDate()+7);
+		var times = date2.getFullYear()+"-"+(date2.getMonth()+1)+"-"+date2.getDate();
+		alert(times);
+	}
+	
+	
+	
+</script>
+</head>
+<body>
+	<input type="button" value="7天后的时间" onclick="fun_submit();"/>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.receiver.ReceiverMapper">
+	<select id="selectExceptId" resultType="com.receiver.Receiver">
+		SELECT * FROM receiverinfo r WHERE r.u_id=#{map.userId} 
+		and r.receiveName=#{map.receiveName} 
+		and r.receiveIdentity=#{map.receiveIdentity}
+		and r.receivePhone=#{map.receivePhone}
+		and r.receiveAddress=#{map.receiveAddress}
+		and r.backAddress=#{map.backAddress}
+	
+	</select>
+	
+	<insert id="insertReceiver" parameterType="map">
+		insert into receiverinfo (u_id,receiveName,receiveIdentity,receivePhone,receiveAddress,backAddress) 
+		VALUES (#{map.userId},#{map.receiveName},#{map.receiveIdentity},#{map.receivePhone},#{map.receiveAddress},#{map.backAddress})
+	</insert>
+	
+	
+	<insert id="addReceiver" parameterType="com.receiver.Receiver" >
+		insert into receiverinfo (u_id,receiveName,receiveIdentity,receivePhone,receiveAddress,backAddress,isDefault) 
+		VALUES (#{receiver.u_id},#{receiver.receiveName},#{receiver.receiveIdentity},#{receiver.receivePhone},#{receiver.receiveAddress},#{receiver.backAddress},#{receiver.isDefault})
+	</insert>
+	
+	
+	<select id="receiverListByUserId" parameterType="int" resultType="com.receiver.Receiver">
+		select * from receiverinfo where u_id = #{userId} order by isDefault desc
+	</select>
+	
+	<!-- 根据id查询取车人详细信息 -->
+	<select id="searchReceiverById" parameterType="com.receiver.Receiver" resultType="com.receiver.Receiver">
+		SELECT * FROM receiverinfo r WHERE r.`id`=#{receiver.id} 
+	</select>
+	
+	
+	<!-- 记录用户数目 -->
+	<select id="countAllReceiverByUserId" resultType="int">
+		SELECT COUNT(r.id) FROM receiverinfo r 
+		  <where>
+			 r.u_id = #{map.userId}
+			
+			<if test="map.receiveName!=null and map.receiveName!='' ">
+				and r.receiveName = #{map.receiveName}
+			</if>
+			<if test="map.receiveIdentity!=null and map.receiveIdentity!=''">
+				and r.receiveIdentity = #{map.receiveIdentity}
+			</if>
+			<if test="map.receivePhone!=null and map.receivePhone!=''">
+				and r.receivePhone = #{map.receivePhone}
+			</if>
+			<if test="map.receiveAddress!=null and map.receiveAddress!=''">
+				and r.receiveAddress = #{map.receiveAddress}
+			</if>
+			<if test="map.backAddress!=null and map.backAddress!=''">
+				and u.backAddress = #{map.backAddress}
+			</if>
+			<!-- <if test="map.email!=null and map.email!=''">
+				and u.email = #{map.email}
+			</if> -->
+			
+		</where>  
+	</select>
+	
+	
+	<!-- 查询所有取车人信息记录
+	20160428
+	 -->
+	<select id="backSearchReceiverList" resultType="com.receiver.Receiver">
+		SELECT * FROM receiverinfo r
+		   <where>
+			
+			  r.u_id = #{map.userId}
+			
+			<if test="map.receiveName!=null and map.receiveName!='' ">
+				and r.receiveName = #{map.receiveName}
+			</if>
+			<if test="map.receiveIdentity!=null and map.receiveIdentity!=''">
+				and r.receiveIdentity = #{map.receiveIdentity}
+			</if>
+			<if test="map.receivePhone!=null and map.receivePhone!=''">
+				and r.receivePhone = #{map.receivePhone}
+			</if>
+			<if test="map.receiveAddress!=null and map.receiveAddress!=''">
+				and r.receiveAddress = #{map.receiveAddress}
+			</if>
+			<if test="map.backAddress!=null and map.backAddress!=''">
+				and r.backAddress = #{map.backAddress}
+			</if>
+			 <if test="map.isDefault!=null and map.isDefault!=''">
+				and r.isDefault = #{map.isDefault}
+			</if> 
+			
+		</where>  
+		order by r.isDefault DESC limit #{startRow},#{pageSize}
+	</select>
+	
+	<!-- 删除取车人信息
+		20160428
+	-->
+	<delete id="receiverDeleteById" parameterType="int">
+	DELETE FROM receiverinfo WHERE id=#{id}
+	</delete>
+	<update id="backUpdateReceiver" parameterType="map">
+	update receiverinfo set  receiveName=#{receiver.receiveName}, 
+		receiveIdentity=#{receiver.receiveIdentity}, 
+		receivePhone=#{receiver.receivePhone}, 
+		receiveAddress=#{receiver.receiveAddress},
+		 backAddress=#{receiver.backAddress}, isDefault=#{receiver.isDefault} 
+		 where id=#{receiver.id}
+	
+	</update>
+	
+	<update id="cancelDefault" parameterType="int">
+		update receiverinfo set isDefault=0 where u_id=#{userId} and isDefault=1;
+	</update>
+</mapper>

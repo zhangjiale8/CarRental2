@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>取车人信息列表</title>
+<script type="text/javascript" src="../jquery-easyui-1.4.4/jquery.min.js"></script>
+<script type="text/javascript" src="../jquery-easyui-1.4.4/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../jquery-easyui-1.4.4/locale/easyui-lang-zh_CN.js"></script>
+<link rel="stylesheet" type="text/css" href="../jquery-easyui-1.4.4/themes/metro/easyui.css">
+<link rel="stylesheet" type="text/css" href="../jquery-easyui-1.4.4/themes/icon.css">
+
+</head>
+<body>
+	<!-- 表格设置 -->
+<table id="receiverInfo"> 
+
+</table>
+<!-- toolber -->
+<div id="receiverInfoTb">
+
+	<form id="receiverSearchForm" method="get">
+		取车人姓名：<input class="easyui-textbox" type="text" id="receiveName" name="receiveName" style="width:130px"/>&nbsp;
+		手机号码：<input class="easyui-textbox" type="text" id="receivePhone" name="receivePhone"  style="width:130px"/>&nbsp;
+	<a href="javascript:;" class="easyui-linkbutton" onclick="receiverInfoSearch()" data-options="iconCls:'icon-search'" style="width:80px">查询</a>
+	<a href="javascript:;" class="easyui-linkbutton" onclick="receiverInfoRedo()" data-options="iconCls:'icon-redo'" style="width:80px">重置</a>
+    </form>
+
+	<a id="receiverInfoEdit" href="javascript:void(0);"
+	class="easyui-linkbutton" data-options="iconCls:'icon-edit',text:'修改'"></a>
+	<!-- <a id="receiverInfoAdd" href="javascript:void(0);"
+	class="easyui-linkbutton" data-options="iconCls:'icon-add',text:'新增'"></a> -->
+	<a id="receiverInfoDelete" href="javascript:void(0);"
+		class="easyui-linkbutton" data-options="iconCls:'icon-remove',text:'删除'"></a>
+</div>
+
+     <!--修改窗口  -->
+ <div id="receiverInfoWindow" class="easyui-window" style="width: 400px"
+	data-options="collapsible:false,minimizable:false,maximizable:false,draggable:false,resizable:false,closed:true,modal:true,closable:false">
+	<div style="padding: 10px 60px 20px 10px">
+		 <form id="receiverInfoForm" method="post">
+		 	<table cellpadding="5">
+		 		<tr>
+		 			<td align="right">编号：</td>
+		 			<td><input class="easyui-textbox" type="text" id="id" name="id" data-options="required:true,editable:false"/></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">姓名：</td>
+		 			<td><input class="easyui-textbox" type="text" id="receiveName" name="receiveName" data-options="required:true"/></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">身份证号：</td>
+		 			<td><input class="easyui-textbox" type="text" id="receiveIdentity" name="receiveIdentity" data-options="prompt:'身份证号',iconWidth:38,required:true,validType:['personId']" /></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">手机号码：</td>
+		 			<td><input class="easyui-textbox" type="text" id="receivePhone" name="receivePhone" data-options="prompt:'手机号码',iconWidth:38,required:true,validType:['mobileNumber']" /></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">取车地址：</td>
+		 			<td><input class="easyui-textbox" type="text" id="receiveAddress" name="receiveAddress" data-options="required:true" /></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">还车地址：</td>
+		 			<td><input class="easyui-textbox" type="text" id="backAddress" name="backAddress" data-options="required:true" /></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">默认：</td>
+		 			<td><input class="easyui-textbox" type="text" id="isDefault" name="isDefault" data-options="required:true" /></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="right">提示：</td>
+		 			<td><span>false表示非默认地址，true表示默认地址</span></td>
+		 		</tr>
+		 	</table>
+		 </form>
+	</div>
+	<div style="text-align: center; padding: 5px;">
+		<a id="receiverInfoSave" href="javascript:void(0);"	class="easyui-linkbutton" data-options="iconCls:'icon-ok',text:'保存'"></a>&nbsp;
+		<a id="receiverInfoFormUndo" href="javascript:void(0);"	class="easyui-linkbutton" data-options="iconCls:'icon-undo',text:'取消'"></a>
+	</div>
+</div>
+   <script type="text/javascript"
+	src="pages/js/receiver/backReceiverInfo.js"></script>
+
+</body>
+
+</html>

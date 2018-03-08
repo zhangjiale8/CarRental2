@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.car.CarMapper">
+	<!-- 删除汽车信息 -->
+	<delete id="carDelete" parameterType="int">
+	DELETE FROM c_car WHERE id=#{id}
+	</delete>
+	<!--车辆更新  -->
+	<update id="updateCar" parameterType="map">
+		update c_car set  license=#{map.license}, 
+		color=#{map.color}, brand=#{map.brand}, c_type=#{map.c_type},
+		 displacement=#{map.displacement}, price=#{map.price},c_describe=#{map.c_describe},
+		 c_level=#{map.c_level},c_status=#{map.c_status} where id=#{map.id}
+	</update>
+	<!-- 根据车牌号码 -->
+	<select id="searchCarByLicense" parameterType="map" resultType="com.car.Car">
+		
+			SELECT * FROM c_car WHERE license=#{map.license} 
+       
+	</select>
+	<!--  新增汽车-->
+	<insert id="addCar" parameterType="map" >
+		insert into c_car (license,color,brand,c_type,displacement,price,c_describe,c_level,c_status) 
+		VALUES (#{map.license},#{map.color},#{map.brand},#{map.c_type},#{map.displacement},#{map.price},#{map.c_describe},#{map.c_level},#{map.c_status})
+	</insert>
+	<!-- 车辆信息记录数 -->
+	<select id="countCar" resultType="int">
+		SELECT COUNT(c.id) FROM c_car c , carstatus cs ,carlevel cl
+		 <where>
+			 cs.id = c.c_status and cl.id = c.c_level
+			<if test="map.license!=null and map.license!='' ">
+			 	and c.license = #{map.license}
+			</if>			
+			<if test="map.c_type!=null and map.c_type!=''">
+				and c.c_type = #{map.c_type}
+			</if>
+			<if test="map.status_kind!=null and map.status_kind!=''">
+				and cs.status_kind = #{map.status_kind}
+			</if>
+			
+		</where>
+	</select>
+	<!-- 车辆查询信息记录 -->
+	<select id="searchCarList" resultType="map">
+		SELECT c.`id`,c.`brand`,c.`color`,c.`license`,c.`c_type`,c.`displacement`,cl.`level_kind`,cs.`status_kind`,c.`c_describe`,c.`price` FROM c_car c , carstatus cs ,carlevel cl
+		 <where>
+			 cs.id = c.c_status and cl.id = c.c_level
+			<if test="map.license!=null and map.license!='' ">
+			 	and c.license = #{map.license}
+			</if>
+			
+			<if test="map.c_type!=null and map.c_type!=''">
+				and c.c_type = #{map.c_type}
+			</if>
+			<if test="map.status_kind!=null and map.status_kind!=''">
+				and cs.status_kind = #{map.status_kind}
+			</if>
+			
+		</where>
+		order by c.id ASC limit #{startRow},#{pageSize}
+	</select>
+	<!-- 异步加载可租赁车辆信息列表 -->
+	<select id="searchAllRentableCarList" resultType="com.car.Car">
+		SELECT * FROM c_car c WHERE c.c_status=1  ORDER BY c.id ASC 
+	</select>
+	<!-- 
+	2016.04.25.17
+	根据carlevel表的id查询押金，返回的是carlevel对象 
+	-->
+	<select id="selectdepositById" resultType="com.car.Carlevel">
+		SELECT * FROM carlevel cl where cl.id=#{map.c_level} 
+	</select>
+	
+	<!-- 根据id查询汽车信息 -->
+	<select id="selectCarById" resultType="com.car.Car">
+		SELECT * FROM c_car c where c.id=#{id} 
+	</select>
+	
+	<!--更新车辆状态 -->
+	<update id="update_c_status" parameterType="map">
+		update c_car set c_status='4' where id=#{map.CarId}
+	</update>
+	<!--20160505，根据车牌号码，更新车辆状态  -->
+	<update id="updateCarStatus" parameterType="map">
+		update c_car set c_status='1' where license=#{map.license}
+	</update>
+	<select id="tackDepositAndfine" resultType="com.car.Carlevel">
+	SELECT cl.`id`,cl.`level_kind`,cl.`deposit`,cl.`fine`
+	FROM carlevel cl,c_car c
+
+	WHERE c.`c_level`=cl.`id`
+	AND c.`license`=#{map.license}
+	
+	</select>
+	
+	<!-- 根据条件查询，新闻列表 -->
+	<select id="searchCarListByCondition" parameterType="map" resultType="com.car.Car">
+		SELECT * FROM c_car c   
+		 <where>
+		 	c.c_status=1
+			<if test="map.brand!=null and map.brand!='' ">
+			 	and c.brand = #{map.brand}
+			</if>
+			
+			<if test="map.c_type!=null and map.c_type!=''">
+				and c.c_type = #{map.c_type}
+			</if>
+			<if test="map.displacement!=null and map.displacement!=''">
+				and c.displacement = #{map.displacement}
+			</if>
+			</where>
+			ORDER BY c.id ASC 
+	</select>
+	
+	<!-- <select id="searchCarInfoByLicense" parameterType="map" resultType="com.car.Car">
+		
+			SELECT * FROM c_car WHERE license=#{map.license} 
+       
+	</select> -->
+	
+	<update id="updateCarStatusByCarId" parameterType="map">
+		update c_car set c_status='1' where id=#{map.CarId}
+	</update>
+</mapper>

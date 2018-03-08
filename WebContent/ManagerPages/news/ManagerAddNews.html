@@ -1,0 +1,26 @@
+
+	<div id="addnewsDiv" style="width: 250px" >
+		<div class="easyui-panel" title="汽车租赁管理系统-增加车辆" >
+			<form id="addnews" method="post">
+				<div>
+					新闻标题：<input id="title" class="easyui-textbox" name="title" data-options="required:true"/>
+				</div><br/>
+				<div >
+					新闻正文：<input id="body" type="text" class="easyui-textbox" name="body" data-options="multiline:true,required:true" style="width:200px;height:150px" />
+				</div><br/>
+
+			</form><br/><br/>
+			<div>
+				<a href="javascript:void(0);" class="easyui-linkbutton" onclick="submitaddnewsForm()" data-options="iconCls:'icon-ok'" > <span style="font-size: 14px;">提交</span>
+				</a>
+				<a  class="easyui-linkbutton" onclick="clearForm()" data-options="iconCls:'icon-help'" > <span style="font-size: 14px;">重置</span>
+				</a>			
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript"
+	src="plug-in/dateFormat.js"></script>
+	<script type="text/javascript"
+	src="ManagerPages/js/news/ManagerAddnews.js"></script>
+
+
